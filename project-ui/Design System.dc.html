@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    @keyframes spin { to { transform: rotate(360deg); } }
+    body { margin:0; }
+  </style>
+</helmet>
+
+<div style="width:1240px;margin:0 auto;background:#F4F7F7;font-family:'Inter','Anuphan',sans-serif;color:#0F2A2B;padding-bottom:80px">
+
+  <!-- COVER -->
+  <div style="background:linear-gradient(150deg,#0EA1A0 0%,#01787B 50%,#014C4E 100%);padding:56px 64px 48px;position:relative;overflow:hidden">
+    <div style="position:absolute;right:-60px;top:-60px;width:280px;height:280px;border-radius:50%;background:rgba(255,255,255,0.06)"></div>
+    <div style="position:absolute;right:120px;bottom:-90px;width:200px;height:200px;border-radius:50%;background:rgba(240,169,62,0.14)"></div>
+    <div style="position:relative;z-index:1;display:flex;align-items:center;gap:18px;margin-bottom:28px">
+      <div style="background:rgba(255,255,255,0.97);border-radius:18px;padding:12px;box-shadow:0 8px 28px rgba(0,0,0,0.18);display:flex;align-items:center;justify-content:center">
+        <div style="width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,#0EA1A0,#01787B)"></div>
+      </div>
+      <div>
+        <div style="color:rgba(255,255,255,0.6);font-size:13px;letter-spacing:0.18em;font-weight:600">DESIGN SYSTEM</div>
+        <div style="color:#fff;font-size:15px;letter-spacing:0.04em;margin-top:3px">GENIUS STOCK</div>
+      </div>
+    </div>
+    <h1 style="color:#fff;font-size:46px;font-weight:700;letter-spacing:-0.02em;margin:0 0 12px;line-height:1.1">Genius Stock Design System</h1>
+    <p style="color:rgba(255,255,255,0.75);font-size:17px;margin:0 0 28px;max-width:640px;line-height:1.5">คู่มือระบบดีไซน์ — สี ฟอนต์ ไอคอน ปุ่ม และส่วนประกอบ UI ทั้งหมด สำหรับระบบคลังสินค้าเบิกจ่าย บน Tailwind CSS + shadcn/ui</p>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">{{ coverChips }}</div>
+  </div>
+
+  <div style="padding:0 64px">
+    <!-- 01 COLORS -->
+    <div style="padding:52px 0 0">
+      <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:6px">
+        <span style="display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:10px;background:#01787B;color:#fff;font-size:14px;font-weight:700">01</span>
+        <h2 style="font-size:28px;font-weight:700;margin:0;letter-spacing:-0.01em">สีในระบบ — Color Palette</h2>
+      </div>
+      <p style="color:#7E9598;font-size:14px;margin:0 0 24px;padding-left:48px">สีแบรนด์ Genius Stock (Teal #01787B) โทนกลาง สีตามความหมาย และชุดสีสำหรับ Dark Mode</p>
+      {{ colorsBlock }}
+    </div>
+
+    <!-- 02 TYPOGRAPHY -->
+    <div style="padding:52px 0 0">
+      <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:6px">
+        <span style="display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:10px;background:#01787B;color:#fff;font-size:14px;font-weight:700">02</span>
+        <h2 style="font-size:28px;font-weight:700;margin:0;letter-spacing:-0.01em">ตัวอักษร — Typography</h2>
+      </div>
+      <p style="color:#7E9598;font-size:14px;margin:0 0 24px;padding-left:48px">Inter สำหรับภาษาอังกฤษและตัวเลข · Anuphan สำหรับภาษาไทย</p>
+      {{ typeBlock }}
+    </div>
+
+    <!-- 03 ICONS -->
+    <div style="padding:52px 0 0">
+      <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:6px">
+        <span style="display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:10px;background:#01787B;color:#fff;font-size:14px;font-weight:700">03</span>
+        <h2 style="font-size:28px;font-weight:700;margin:0;letter-spacing:-0.01em">ไอคอน — Icon Library</h2>
+      </div>
+      <p style="color:#7E9598;font-size:14px;margin:0 0 24px;padding-left:48px">แนว Hugeicons Stroke Rounded (แพ็กเกจฟรี) · viewBox 24×24 · stroke 1.5 · ปรับสี/ขนาด/น้ำหนักเส้นได้ — งานจริงให้สลับไปใช้ path จาก @hugeicons/core-free-icons</p>
+      {{ iconsBlock }}
+    </div>
+
+    <!-- 04 BUTTONS -->
+    <div style="padding:52px 0 0">
+      <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:6px">
+        <span style="display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:10px;background:#01787B;color:#fff;font-size:14px;font-weight:700">04</span>
+        <h2 style="font-size:28px;font-weight:700;margin:0;letter-spacing:-0.01em">ปุ่ม — Buttons</h2>
+      </div>
+      <p style="color:#7E9598;font-size:14px;margin:0 0 24px;padding-left:48px">ปุ่มหลัก ปุ่มรอง ปุ่มทำลาย และปุ่มไอคอน</p>
+      {{ buttonsBlock }}
+    </div>
+
+    <!-- 05 FORMS -->
+    <div style="padding:52px 0 0">
+      <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:6px">
+        <span style="display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:10px;background:#01787B;color:#fff;font-size:14px;font-weight:700">05</span>
+        <h2 style="font-size:28px;font-weight:700;margin:0;letter-spacing:-0.01em">ฟอร์ม — Inputs &amp; Controls</h2>
+      </div>
+      <p style="color:#7E9598;font-size:14px;margin:0 0 24px;padding-left:48px">ช่องกรอกข้อมูล select สวิตช์ และ status select (shadcn/ui style)</p>
+      {{ formsBlock }}
+    </div>
+
+    <!-- 06 SURFACES -->
+    <div style="padding:52px 0 0">
+      <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:6px">
+        <span style="display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:10px;background:#01787B;color:#fff;font-size:14px;font-weight:700">06</span>
+        <h2 style="font-size:28px;font-weight:700;margin:0;letter-spacing:-0.01em">การ์ด &amp; สถานะ — Cards, Badges, Table Rows</h2>
+      </div>
+      <p style="color:#7E9598;font-size:14px;margin:0 0 24px;padding-left:48px">KPI card แถวตารางสินค้า และ status badge (ปกติ/ใกล้หมด/หมดสต็อก)</p>
+      {{ surfacesBlock }}
+    </div>
+
+    <!-- 07 NAVIGATION -->
+    <div style="padding:52px 0 0">
+      <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:6px">
+        <span style="display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:10px;background:#01787B;color:#fff;font-size:14px;font-weight:700">07</span>
+        <h2 style="font-size:28px;font-weight:700;margin:0;letter-spacing:-0.01em">การนำทาง — Sidebar &amp; Topbar</h2>
+      </div>
+      <p style="color:#7E9598;font-size:14px;margin:0 0 24px;padding-left:48px">รูปแบบเมนูด้านข้างและแถบด้านบนที่ใช้ทุกหน้าในระบบ</p>
+      {{ navBlock }}
+    </div>
+
+    <!-- 08 TOKENS -->
+    <div style="padding:52px 0 0">
+      <div style="display:flex;align-items:baseline;gap:14px;margin-bottom:6px">
+        <span style="display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:10px;background:#01787B;color:#fff;font-size:14px;font-weight:700">08</span>
+        <h2 style="font-size:28px;font-weight:700;margin:0;letter-spacing:-0.01em">โทเคน — Radius, Elevation, Spacing</h2>
+      </div>
+      <p style="color:#7E9598;font-size:14px;margin:0 0 24px;padding-left:48px">ค่ามาตรฐานของมุมโค้ง เงา และระยะห่าง</p>
+      {{ tokensBlock }}
+    </div>
+
+    <!-- FOOTER -->
+    <div style="margin-top:60px;padding:28px 0;border-top:1px solid #DCE6E6;display:flex;align-items:center;justify-content:space-between;color:#7E9598;font-size:13px">
+      <span>Genius Stock · Design System v1.0</span>
+      <span>ระบบคลังสินค้าเบิกจ่าย · Next.js + Tailwind + shadcn/ui</span>
+    </div>
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  C = {
+    pri:'#01787B', priLt:'#0EA1A0', priDk:'#014C4E', priSoft:'#E3F2F1', gold:'#D98F2B',
+    bg:'#F4F7F7', card:'#FFFFFF', border:'#DCE6E6',
+    txDk:'#0F2A2B', txMd:'#4B6367', txSb:'#7E9598',
+    aGr:'#16A34A', aBg:'#DCFCE7', aTx:'#14532D',
+    pGr:'#D97706', pBg:'#FEF3C7', pTx:'#92400E',
+    lRd:'#DC2626', lBg:'#FEE2E2', lTx:'#991B1B',
+    iBl:'#4F46E5', iBg:'#E7E5FF', iTx:'#3730A3',
+  };
+  mono = "'JetBrains Mono',monospace";
+
+  ic(name, size, color, sw, key) {
+    const h = React.createElement;
+    size = size || 24; color = color || 'currentColor'; sw = sw || 1.5;
+    const P = {
+      grid: [["rect",{"x":3,"y":3,"width":8,"height":8,"rx":2}],["rect",{"x":13,"y":3,"width":8,"height":8,"rx":2}],["rect",{"x":3,"y":13,"width":8,"height":8,"rx":2}],["rect",{"x":13,"y":13,"width":8,"height":8,"rx":2}]],
+      box: [["path",{"d":"M3.5 8.5L12 4L20.5 8.5L12 13L3.5 8.5Z"}],["path",{"d":"M3.5 8.5V16L12 20.5V13"}],["path",{"d":"M20.5 8.5V16L12 20.5"}]],
+      inTray: [["path",{"d":"M4 13V17.5C4 19.5 5.5 21 7.5 21H16.5C18.5 21 20 19.5 20 17.5V13"}],["path",{"d":"M12 3V14"}],["path",{"d":"M8 10.5L12 14.5L16 10.5"}]],
+      outTray: [["path",{"d":"M4 13V17.5C4 19.5 5.5 21 7.5 21H16.5C18.5 21 20 19.5 20 17.5V13"}],["path",{"d":"M12 14V3"}],["path",{"d":"M8 6.5L12 2.5L16 6.5"}]],
+      alertTri: [["path",{"d":"M10.4 3.9L2.6 17.5C1.9 18.7 2.8 20.2 4.2 20.2H19.8C21.2 20.2 22.1 18.7 21.4 17.5L13.6 3.9C12.9 2.7 11.1 2.7 10.4 3.9Z"}],["path",{"d":"M12 9V13.5"}],["path",{"d":"M12 16.3H12.01"}]],
+      chart: [["path",{"d":"M4 20V10"}],["path",{"d":"M11 20V4"}],["path",{"d":"M18 20V13"}],["path",{"d":"M3 20H21"}]],
+      users: [["path",{"d":"M8.5 11.5C10.433 11.5 12 9.933 12 8C12 6.067 10.433 4.5 8.5 4.5C6.567 4.5 5 6.067 5 8C5 9.933 6.567 11.5 8.5 11.5Z"}],["path",{"d":"M2.5 19C2.5 15.9624 5.18629 13.5 8.5 13.5C11.8137 13.5 14.5 15.9624 14.5 19"}],["path",{"d":"M15.5 5C17.1569 5.24291 18.5 6.68501 18.5 8.375C18.5 10.065 17.1569 11.507 15.5 11.75"}],["path",{"d":"M16.5 13.75C19.05 14.28 21 16.1 21 18.65"}]],
+      settings: [["path",{"d":"M12 15.2C13.7673 15.2 15.2 13.7673 15.2 12C15.2 10.2327 13.7673 8.8 12 8.8C10.2327 8.8 8.8 10.2327 8.8 12C8.8 13.7673 10.2327 15.2 12 15.2Z"}],["path",{"d":"M19.4 12.8V11.2L17.6 10.7C17.45 10.05 17.2 9.45 16.85 8.9L17.75 7.25L16.65 6.15L15 7.05C14.45 6.7 13.85 6.45 13.2 6.3L12.7 4.5H11.1L10.6 6.3C9.95 6.45 9.35 6.7 8.8 7.05L7.15 6.15L6.05 7.25L6.95 8.9C6.6 9.45 6.35 10.05 6.2 10.7L4.4 11.2V12.8L6.2 13.3C6.35 13.95 6.6 14.55 6.95 15.1L6.05 16.75L7.15 17.85L8.8 16.95C9.35 17.3 9.95 17.55 10.6 17.7L11.1 19.5H12.7L13.2 17.7C13.85 17.55 14.45 17.3 15 16.95L16.65 17.85L17.75 16.75L16.85 15.1C17.2 14.55 17.45 13.95 17.6 13.3L19.4 12.8Z"}]],
+      search: [["path",{"d":"M17 17L21 21"}],["path",{"d":"M19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19C15.4183 19 19 15.4183 19 11Z"}]],
+      bell: [["path",{"d":"M20 18.5011L18.349 7.93407C17.8603 4.80601 15.166 2.5 12 2.5C8.83398 2.5 6.13971 4.80601 5.65098 7.93407L4 18.5011"}],["path",{"d":"M20 18.5C20 16.8431 16.4183 15.5 12 15.5C7.58172 15.5 4 16.8431 4 18.5C4 20.1569 7.58172 21.5 12 21.5C16.4183 21.5 20 20.1569 20 18.5Z"}],["path",{"d":"M13 18.5H11"}]],
+      moon: [["path",{"d":"M21.5 14.0784C20.3003 14.7189 18.9301 15.0821 17.4751 15.0821C12.7491 15.0821 8.91792 11.2509 8.91792 6.52485C8.91792 5.06986 9.28105 3.69968 9.92163 2.5C5.66765 3.49698 2.5 7.31513 2.5 11.8731C2.5 17.1899 6.8101 21.5 12.1269 21.5C16.6849 21.5 20.503 18.3324 21.5 14.0784Z"}]],
+      sun: [["path",{"d":"M17 12C17 14.7614 14.7614 17 12 17C9.23858 17 7 14.7614 7 12C7 9.23858 9.23858 7 12 7C14.7614 7 17 9.23858 17 12Z"}],["path",{"d":"M12 2V3.5M12 20.5V22M19.0708 19.0713L18.0101 18.0106M5.98926 5.98926L4.9286 4.9286M22 12H20.5M3.5 12H2M19.0713 4.92871L18.0106 5.98937M5.98975 18.0107L4.92909 19.0714"}]],
+      user: [["path",{"d":"M17 8.5C17 5.73858 14.7614 3.5 12 3.5C9.23858 3.5 7 5.73858 7 8.5C7 11.2614 9.23858 13.5 12 13.5C14.7614 13.5 17 11.2614 17 8.5Z"}],["path",{"d":"M19 20.5C19 16.634 15.866 13.5 12 13.5C8.13401 13.5 5 16.634 5 20.5"}]],
+      lock: [["path",{"d":"M12 16.5V14.5"}],["path",{"d":"M4.2678 18.8447C4.49268 20.515 5.87612 21.8235 7.55965 21.9009C8.97627 21.966 10.4153 22 12 22C13.5847 22 15.0237 21.966 16.4403 21.9009C18.1239 21.8235 19.5073 20.515 19.7322 18.8447C19.8789 17.7547 20 16.6376 20 15.5C20 14.3624 19.8789 13.2453 19.7322 12.1553C19.5073 10.485 18.1239 9.17649 16.4403 9.09909C15.0237 9.03397 13.5847 9 12 9C10.4153 9 8.97627 9.03397 7.55965 9.09909C5.87612 9.17649 4.49268 10.485 4.2678 12.1553C4.12104 13.2453 3.99999 14.3624 3.99999 15.5C3.99999 16.6376 4.12104 17.7547 4.2678 18.8447Z"}],["path",{"d":"M7.5 9V6.5C7.5 4.01472 9.51472 2 12 2C14.4853 2 16.5 4.01472 16.5 6.5V9"}]],
+      eye: [["path",{"d":"M21.544 11.045C21.848 11.4713 22 11.6845 22 12C22 12.3155 21.848 12.5287 21.544 12.955C20.1779 14.8706 16.6892 19 12 19C7.31078 19 3.8221 14.8706 2.45604 12.955C2.15201 12.5287 2 12.3155 2 12C2 11.6845 2.15201 11.4713 2.45604 11.045C3.8221 9.12944 7.31078 5 12 5C16.6892 5 20.1779 9.12944 21.544 11.045Z"}],["path",{"d":"M15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15C13.6569 15 15 13.6569 15 12Z"}]],
+      eyeOff: [["path",{"d":"M22 8C22 8 18 14 12 14C6 14 2 8 2 8"}],["path",{"d":"M15 13.5L16.5 16"}],["path",{"d":"M20 11L22 13"}],["path",{"d":"M2 13L4 11"}],["path",{"d":"M9 13.5L7.5 16"}]],
+      mail: [["path",{"d":"M2 6L8.91302 9.91697C11.4616 11.361 12.5384 11.361 15.087 9.91697L22 6"}],["path",{"d":"M2.01577 13.4756C2.08114 16.5412 2.11383 18.0739 3.24496 19.2094C4.37608 20.3448 5.95033 20.3843 9.09883 20.4634C11.0393 20.5122 12.9607 20.5122 14.9012 20.4634C18.0497 20.3843 19.6239 20.3448 20.7551 19.2094C21.8862 18.0739 21.9189 16.5412 21.9842 13.4756C22.0053 12.4899 22.0053 11.5101 21.9842 10.5244C21.9189 7.45886 21.8862 5.92609 20.7551 4.79066C19.6239 3.65523 18.0497 3.61568 14.9012 3.53657C12.9607 3.48781 11.0393 3.48781 9.09882 3.53656C5.95033 3.61566 4.37608 3.65521 3.24495 4.79065C2.11382 5.92608 2.08114 7.45885 2.01576 10.5244C1.99474 11.5101 1.99475 12.4899 2.01577 13.4756Z"}]],
+      login: [["path",{"d":"M6 18C6 18.4644 6 18.6965 6.022 18.8918C6.20482 20.5145 7.48545 21.7952 9.10814 21.978C9.30345 22 9.53562 22 9.99998 22H13C16.2998 22 17.9497 22 18.9749 20.9749C20 19.9498 20 18.2998 20 15L20 8.99998C20 5.70016 20 4.05024 18.9748 3.02512C17.9497 2 16.2998 2 13 2H9.99998C9.53563 2 9.30345 2 9.10814 2.02201C7.48545 2.20483 6.20482 3.48547 6.022 5.10816C6 5.30347 6 5.53565 6 6"}],["path",{"d":"M4.07612 11.1183C4 11.3021 4 11.535 4 12.001C4 12.4669 4 12.6999 4.07612 12.8837C4.17761 13.1287 4.37229 13.3234 4.61732 13.4249C4.80109 13.501 5.03406 13.501 5.5 13.501H10.5C10.5002 15.2503 10.511 16.1299 11.0623 16.3858C11.0829 16.3954 11.1037 16.4042 11.1249 16.4124C11.7045 16.6353 12.3999 16.0139 13.7907 14.7711C15.2576 13.4602 15.9912 12.7851 16 11.957C15.9912 11.1289 15.2576 10.4538 13.7907 9.14301C12.3999 7.90018 11.7045 7.27876 11.1249 7.50171C11.1037 7.50985 11.0829 7.51869 11.0623 7.52822C10.5018 7.78844 10.5 8.69318 10.5 10.501H5.5C5.03406 10.501 4.80109 10.501 4.61732 10.5771C4.37229 10.6786 4.17761 10.8733 4.07612 11.1183Z"}]],
+      logout: [["path",{"d":"M18 18C18 18.4644 18 18.6965 17.978 18.8918C17.7952 20.5145 16.5145 21.7952 14.8919 21.978C14.6965 22 14.4644 22 14 22H11C7.70017 22 6.05025 22 5.02513 20.9749C4 19.9498 4 18.2998 4 15L4.00001 8.99998C4.00001 5.70016 4.00003 4.05024 5.02514 3.02512C6.05027 2 7.70018 2 11 2H14C14.4644 2 14.6965 2 14.8919 2.02201C16.5145 2.20483 17.7952 3.48547 17.978 5.10816C18 5.30347 18 5.53565 18 6"}],["path",{"d":"M8.07612 11.1183C8 11.3021 8 11.535 8 12.001C8 12.4669 8 12.6999 8.07612 12.8837C8.17761 13.1287 8.37229 13.3234 8.61732 13.4249C8.80109 13.501 9.03406 13.501 9.5 13.501H14.5C14.5002 15.2503 14.511 16.1299 15.0623 16.3858C15.0829 16.3954 15.1037 16.4042 15.1249 16.4124C15.7045 16.6353 16.3999 16.0139 17.7907 14.7711C19.2576 13.4602 19.9912 12.7851 20 11.957C19.9912 11.1289 19.2576 10.4538 17.7907 9.14301C16.3999 7.90018 15.7045 7.27876 15.1249 7.50171C15.1037 7.50985 15.0829 7.51869 15.0623 7.52822C14.5018 7.78844 14.5 8.69318 14.5 10.501H9.5C9.03406 10.501 8.80109 10.501 8.61732 10.5771C8.37229 10.6786 8.17761 10.8733 8.07612 11.1183Z"}]],
+      plus: [["path",{"d":"M12.001 5.00003V19.002"}],["path",{"d":"M19.002 12.002L4.99998 12.002"}]],
+      edit: [["path",{"d":"M14.0737 3.88545C14.8189 3.07808 15.1915 2.6744 15.5874 2.43893C16.5427 1.87076 17.7191 1.85309 18.6904 2.39232C19.0929 2.6158 19.4769 3.00812 20.245 3.79276C21.0131 4.5774 21.3972 4.96972 21.6159 5.38093C22.1438 6.37312 22.1265 7.57479 21.5703 8.5507C21.3398 8.95516 20.9446 9.33578 20.1543 10.097L10.7506 19.1543C9.25288 20.5969 8.504 21.3182 7.56806 21.6837C6.63212 22.0493 5.6032 22.0224 3.54536 21.9686L3.26538 21.9613C2.63891 21.9449 2.32567 21.9367 2.14359 21.73C1.9615 21.5234 1.98636 21.2043 2.03608 20.5662L2.06308 20.2197C2.20301 18.4235 2.27297 17.5255 2.62371 16.7182C2.97444 15.9109 3.57944 15.2555 4.78943 13.9445L14.0737 3.88545Z"}],["path",{"d":"M13 4L20 11"}],["path",{"d":"M14 22L22 22"}]],
+      trash: [["path",{"d":"M20.5 6H3.5"}],["path",{"d":"M18.5 8.5L18.05 15.5C17.85 18.5 17.75 20 15.9 20H8.1C6.25 20 6.15 18.5 5.95 15.5L5.5 8.5"}],["path",{"d":"M9.5 6V4.5C9.5 3.4 10.4 2.5 11.5 2.5H12.5C13.6 2.5 14.5 3.4 14.5 4.5V6"}],["path",{"d":"M10 11V15.5"}],["path",{"d":"M14 11V15.5"}]],
+      chevronL: [["path",{"d":"M15 6C15 6 9.00001 10.4189 9 12C8.99999 13.5812 15 18 15 18"}]],
+      chevronR: [["path",{"d":"M9.00005 6C9.00005 6 15 10.4189 15 12C15 13.5812 9 18 9 18"}]],
+      chevronD: [["path",{"d":"M6 9C6 9 10.4189 15 12 15C13.5812 15 18 9 18 9"}]],
+      checkCircle: [["path",{"d":"M22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12Z"}],["path",{"d":"M8 12.5L10.5 15L16 9"}]],
+      xCircle: [["path",{"d":"M22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12Z"}],["path",{"d":"M14.9994 15L9 9M9.00064 15L15 9"}]],
+      filter: [["path",{"d":"M3 6.5H21"}],["path",{"d":"M6.5 12H17.5"}],["path",{"d":"M10.5 17.5H13.5"}]],
+      clock: [["circle",{"cx":"12","cy":"12","r":"10"}],["path",{"d":"M12 8V12L14 14"}]],
+      list: [["path",{"d":"M9 6H20"}],["path",{"d":"M9 12H20"}],["path",{"d":"M9 18H20"}],["path",{"d":"M4 6H4.01"}],["path",{"d":"M4 12H4.01"}],["path",{"d":"M4 18H4.01"}]],
+    };
+    return h('svg', {key:key, viewBox:'0 0 24 24', width:size, height:size, fill:'none', stroke:color, strokeWidth:sw, strokeLinecap:'round', strokeLinejoin:'round', style:{display:'block',flexShrink:0}},
+      ...(P[name]||[]).map((p,i) => h(p[0], {key:i, ...p[1]})));
+  }
+  get iconNames(){ return ['grid','box','inTray','outTray','alertTri','chart','users','settings','search','bell','moon','sun','user','lock','eye','eyeOff','mail','login','logout','plus','edit','trash','chevronL','chevronR','chevronD','checkCircle','xCircle','filter','clock','list']; }
+  HUGE = {grid:'GridView',box:'PackageOpen',inTray:'PackageAdd',outTray:'PackageRemove',alertTri:'Alert02',chart:'ChartHistogram',users:'UserGroup',settings:'Settings01',search:'Search01',bell:'Notification03',moon:'Moon02',sun:'Sun03',user:'User',lock:'SquareLock02',eye:'View',eyeOff:'ViewOff',mail:'Mail01',login:'Login03',logout:'Logout03',plus:'Add01',edit:'Edit02',trash:'Delete02',chevronL:'ArrowLeft01',chevronR:'ArrowRight01',chevronD:'ArrowDown01',checkCircle:'CheckmarkCircle02',xCircle:'CancelCircle',filter:'FilterHorizontal',clock:'Clock01',list:'TaskDaily01'};
+
+  card(children, pad){ const h=React.createElement; return h('div',{style:{background:this.C.card,borderRadius:16,padding:pad||24,boxShadow:'0 1px 3px rgba(1,45,46,0.08)',border:'1px solid rgba(1,45,46,0.04)'}}, children); }
+  subTitle(t){ const h=React.createElement; return h('div',{style:{fontSize:13,fontWeight:700,color:this.C.txMd,marginBottom:14,letterSpacing:'0.04em',textTransform:'uppercase'}}, t); }
+  codePill(t){ const h=React.createElement; return h('span',{style:{fontFamily:this.mono,fontSize:11,color:this.C.txMd,background:this.C.bg,borderRadius:6,padding:'2px 7px'}}, t); }
+
+  renderCoverChips(){
+    const h=React.createElement;
+    const items=[['11','สี'],['2','Font Family'],['30','ไอคอน'],['6','ปุ่ม'],['9','ส่วนประกอบ']];
+    return items.map((it,i)=>h('div',{key:i,style:{display:'flex',alignItems:'baseline',gap:7,background:'rgba(255,255,255,0.12)',border:'1px solid rgba(255,255,255,0.18)',borderRadius:20,padding:'8px 16px'}},
+      h('span',{style:{color:'#fff',fontSize:17,fontWeight:700}},it[0]),
+      h('span',{style:{color:'rgba(255,255,255,0.75)',fontSize:13}},it[1])));
+  }
+
+  /* ─── 01 COLORS ─── */
+  swatch(hex, name, role){
+    const h=React.createElement; const C=this.C;
+    const light = ['#FFFFFF','#F4F7F7','#DCFCE7','#FEF3C7','#FEE2E2','#E7E5FF','#DCE6E6','#E3F2F1'].includes(hex.toUpperCase());
+    return h('div',{key:hex+name,style:{borderRadius:13,overflow:'hidden',border:`1px solid ${C.border}`,background:C.card}},
+      h('div',{style:{height:84,background:hex,borderBottom:light?`1px solid ${C.border}`:'none'}}),
+      h('div',{style:{padding:'10px 12px'}},
+        h('div',{style:{fontSize:13,fontWeight:700,color:C.txDk,marginBottom:2}},name),
+        h('div',{style:{fontSize:11,color:C.txSb,marginBottom:6}},role),
+        h('span',{style:{fontFamily:this.mono,fontSize:11.5,color:C.txMd,letterSpacing:'0.02em'}},hex)));
+  }
+  swatchGrid(items, cols){
+    const h=React.createElement;
+    return h('div',{style:{display:'grid',gridTemplateColumns:`repeat(${cols||5},1fr)`,gap:12}}, items.map(it=>this.swatch(it[0],it[1],it[2])));
+  }
+  renderColors(){
+    const h=React.createElement; const C=this.C;
+    return h('div',{style:{display:'flex',flexDirection:'column',gap:18}},
+      this.card([
+        this.subTitle('Brand · สีแบรนด์'),
+        this.swatchGrid([
+          ['#01787B','Primary','ปุ่มหลัก ลิงก์ แอคทีฟ'],
+          ['#0EA1A0','Primary Light','ไล่เฉด hover'],
+          ['#014C4E','Primary Dark','ข้อความบนพื้นอ่อน'],
+          ['#E3F2F1','Primary Soft','พื้นหลังไอคอน/แถบ active'],
+          ['#D98F2B','Accent Gold','ไฮไลต์ จุดเด่น จำนวนพิเศษ'],
+        ],5)
+      ]),
+      this.card([
+        this.subTitle('Surface & Neutral · พื้นผิวและโทนกลาง'),
+        this.swatchGrid([
+          ['#F4F7F7','Background','พื้นหลังแอป'],
+          ['#FFFFFF','Card / Surface','การ์ด พื้นผิว ตาราง'],
+          ['#DCE6E6','Border','เส้นขอบ เส้นคั่น'],
+          ['#0F2A2B','Text Dark','หัวข้อ ข้อความหลัก'],
+          ['#4B6367','Text Medium','ข้อความรอง'],
+          ['#7E9598','Text Subtle','คำอธิบาย caption'],
+        ],6)
+      ]),
+      this.card([
+        this.subTitle('Semantic · สีตามความหมาย'),
+        h('div',{style:{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:14}},
+          ...[
+            ['Success · ปกติ','#16A34A','#DCFCE7','#14532D','สต็อกปกติ / รับเข้าสำเร็จ'],
+            ['Warning · ใกล้หมด','#D97706','#FEF3C7','#92400E','ต่ำกว่าจุดสั่งซื้อ'],
+            ['Danger · หมดสต็อก','#DC2626','#FEE2E2','#991B1B','คงเหลือเป็น 0 / เบิกเกิน'],
+            ['Info · ข้อมูล','#4F46E5','#E7E5FF','#3730A3','แจ้งเตือนทั่วไป'],
+          ].map((s,i)=>h('div',{key:i,style:{borderRadius:13,border:`1px solid ${C.border}`,overflow:'hidden',background:C.card}},
+            h('div',{style:{background:s[2],padding:'14px 14px 12px'}},
+              h('span',{style:{display:'inline-flex',alignItems:'center',gap:6,background:s[2],color:s[3],fontSize:11,fontWeight:700,padding:'4px 11px',borderRadius:20,border:`1px solid ${s[1]}33`}},
+                h('span',{style:{width:7,height:7,borderRadius:'50%',background:s[1],display:'block'}}), 'Badge')),
+            h('div',{style:{padding:'10px 13px'}},
+              h('div',{style:{fontSize:12.5,fontWeight:700,color:C.txDk,marginBottom:6}},s[0]),
+              h('div',{style:{fontSize:11,color:C.txSb,marginBottom:8}},s[4]),
+              h('div',{style:{display:'flex',gap:5,flexWrap:'wrap'}}, [['fg',s[1]],['bg',s[2]],['tx',s[3]]].map((p,j)=>h('span',{key:j,style:{fontFamily:this.mono,fontSize:10,color:C.txMd,background:C.bg,borderRadius:5,padding:'2px 6px'}},p[1]))))))
+        )
+      ]),
+      this.card([
+        this.subTitle('Dark Mode · ชุดสีโหมดมืด'),
+        h('div',{style:{background:'#0B1E1F',borderRadius:13,padding:18}},
+          h('div',{style:{display:'grid',gridTemplateColumns:'repeat(6,1fr)',gap:12}},
+            ...[
+              ['#14A6A9','Primary'],['#0B1E1F','Background'],['#12292A','Card'],['#1F3B3C','Border'],['#E7F3F3','Text Dark'],['#8FA9AB','Text Subtle'],
+            ].map((s,i)=>h('div',{key:i},
+              h('div',{style:{height:56,background:s[0],borderRadius:9,border:'1px solid rgba(255,255,255,0.08)'}}),
+              h('div',{style:{fontSize:11.5,fontWeight:600,color:'#E7F3F3',marginTop:7}},s[1]),
+              h('div',{style:{fontFamily:this.mono,fontSize:10.5,color:'#8FA9AB',marginTop:1}},s[0])))))
+      ])
+    );
+  }
+
+  /* ─── 02 TYPOGRAPHY ─── */
+  renderType(){
+    const h=React.createElement; const C=this.C;
+    const scale=[
+      ['Display','30','700','ยอดมูลค่าสต็อกรวม','฿906,430'],
+      ['Title L','21','700','หัวข้อหน้า · Auth header','จัดการคลังสินค้า'],
+      ['Title','18','700','หัวข้อ Topbar','ภาพรวมคลังสินค้า'],
+      ['Section','14','700','หัวข้อกลุ่ม','รายการสินค้าในคลัง'],
+      ['Row Title','13','700','ชื่อสินค้าในตาราง','น้ำดื่ม 600ml (ลัง)'],
+      ['Body','13','400','เนื้อหาทั่วไป','บันทึกการรับเข้าและตัดยอดอัตโนมัติ'],
+      ['Label','12','600','ป้ายกำกับ field','จำนวนที่รับเข้า'],
+      ['Caption','11','400','คำอธิบาย เลขที่','SKU-1001'],
+      ['Micro','10','700','ป้าย badge','ใกล้หมด'],
+    ];
+    return h('div',{style:{display:'flex',flexDirection:'column',gap:18}},
+      h('div',{style:{display:'grid',gridTemplateColumns:'1fr 1fr',gap:18}},
+        this.card([
+          h('div',{style:{display:'flex',alignItems:'baseline',justifyContent:'space-between',marginBottom:14}},
+            h('span',{style:{fontSize:64,fontWeight:700,fontFamily:"'Inter',sans-serif",color:C.pri,lineHeight:1}},'Aa'),
+            this.codePill('Inter')),
+          h('div',{style:{fontSize:15,fontWeight:700,color:C.txDk,marginBottom:4}},'Inter'),
+          h('div',{style:{fontSize:12.5,color:C.txSb,marginBottom:12,lineHeight:1.5}},'ภาษาอังกฤษและตัวเลขทั้งหมด · SKU ราคา จำนวน วันที่'),
+          h('div',{style:{fontFamily:"'Inter',sans-serif",fontSize:19,color:C.txMd,letterSpacing:'0.01em'}},'฿ 0123456789 SKU'),
+          h('div',{style:{display:'flex',gap:6,marginTop:12,flexWrap:'wrap'}},['400','500','600','700'].map(w=>h('span',{key:w,style:{fontFamily:"'Inter'",fontWeight:Number(w),fontSize:13,color:C.txDk,background:C.bg,borderRadius:6,padding:'4px 10px'}},w)))
+        ]),
+        this.card([
+          h('div',{style:{display:'flex',alignItems:'baseline',justifyContent:'space-between',marginBottom:14}},
+            h('span',{style:{fontSize:64,fontWeight:700,fontFamily:"'Anuphan',sans-serif",color:C.pri,lineHeight:1}},'กข'),
+            this.codePill('Anuphan')),
+          h('div',{style:{fontSize:15,fontWeight:700,color:C.txDk,marginBottom:4}},'Anuphan'),
+          h('div',{style:{fontSize:12.5,color:C.txSb,marginBottom:12,lineHeight:1.5}},'ภาษาไทยทั้งหมด · อ่านง่าย เหมาะกับตารางและฟอร์ม'),
+          h('div',{style:{fontFamily:"'Anuphan',sans-serif",fontSize:19,color:C.txMd}},'ระบบคลังสินค้าเบิกจ่าย'),
+          h('div',{style:{display:'flex',gap:6,marginTop:12,flexWrap:'wrap'}},['300','400','500','600','700'].map(w=>h('span',{key:w,style:{fontFamily:"'Anuphan'",fontWeight:Number(w),fontSize:13,color:C.txDk,background:C.bg,borderRadius:6,padding:'4px 10px'}},w)))
+        ])
+      ),
+      this.card([
+        this.subTitle('Type Scale · ลำดับขนาด'),
+        h('div',{style:{display:'flex',flexDirection:'column'}},
+          ...scale.map((r,i)=>h('div',{key:i,style:{display:'flex',alignItems:'center',gap:20,padding:'13px 0',borderBottom:i<scale.length-1?`1px solid ${C.border}`:'none'}},
+            h('div',{style:{width:90,flexShrink:0}}, h('div',{style:{fontSize:12.5,fontWeight:700,color:C.txDk}},r[0]), h('span',{style:{fontFamily:this.mono,fontSize:11,color:C.txSb}},r[1]+'px · '+r[2])),
+            h('div',{style:{flex:1,fontSize:Number(r[1]),fontWeight:Number(r[2]),color:C.txDk,fontFamily:"'Inter','Anuphan',sans-serif",lineHeight:1.2,overflow:'hidden',whiteSpace:'nowrap',textOverflow:'ellipsis'}},r[4]),
+            h('div',{style:{width:200,flexShrink:0,fontSize:11.5,color:C.txSb,textAlign:'right'}},r[3]))))
+      ])
+    );
+  }
+
+  /* ─── 03 ICONS ─── */
+  renderIcons(){
+    const h=React.createElement; const C=this.C;
+    return h('div',{style:{display:'flex',flexDirection:'column',gap:18}},
+      this.card([
+        h('div',{style:{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:16,flexWrap:'wrap',gap:10}},
+          h('div',{style:{display:'flex',alignItems:'center',gap:9}},
+            h('span',{style:{width:9,height:9,borderRadius:'50%',background:'#D98F2B',display:'block'}}),
+            h('span',{style:{fontSize:13,fontWeight:700,color:C.txDk}},'Hugeicons · Stroke Rounded'),
+            h('span',{style:{fontSize:12,color:C.txSb}},'· 30 ไอคอนที่ใช้')),
+          h('span',{style:{fontFamily:this.mono,fontSize:11,color:C.txMd,background:C.bg,borderRadius:7,padding:'4px 10px'}},'24×24 · stroke 1.5')),
+        h('div',{style:{display:'grid',gridTemplateColumns:'repeat(6,1fr)',gap:10}},
+          ...this.iconNames.map(n=>h('div',{key:n,style:{display:'flex',flexDirection:'column',alignItems:'center',gap:7,padding:'14px 4px 10px',borderRadius:11,background:C.bg,border:`1px solid ${C.border}`}},
+            this.ic(n,26,C.pri,1.5),
+            h('span',{style:{fontFamily:this.mono,fontSize:10,fontWeight:600,color:C.txDk,textAlign:'center',wordBreak:'break-word',lineHeight:1.25}},this.HUGE[n]||n),
+            h('span',{style:{fontSize:9,color:C.txSb,textAlign:'center'}},n))))
+      ]),
+      this.card([
+        this.subTitle('React Usage · วิธีเรียกใช้ (shadcn/ui + Tailwind)'),
+        h('div',{style:{background:'#0F1A2C',borderRadius:12,padding:'14px 16px',fontFamily:this.mono,fontSize:12,lineHeight:1.7,color:'#EAF1FB',overflowX:'auto'}},
+          h('div',{}, h('span',{style:{color:'#73829F'}},'// '),h('span',{style:{color:'#73829F'}},'npm i @hugeicons/react @hugeicons/core-free-icons')),
+          h('div',{}, h('span',{style:{color:'#7DD3FC'}},'import'),' { HugeiconsIcon } ',h('span',{style:{color:'#7DD3FC'}},'from'),' ',h('span',{style:{color:'#FCD34D'}},"'@hugeicons/react'"),';'),
+          h('div',{}, h('span',{style:{color:'#7DD3FC'}},'import'),' { PackageAdd01Icon } ',h('span',{style:{color:'#7DD3FC'}},'from'),' ',h('span',{style:{color:'#FCD34D'}},"'@hugeicons/core-free-icons'"),';'),
+          h('div',{style:{marginTop:8}}, '<HugeiconsIcon ',h('span',{style:{color:'#A3D85C'}},'icon'),'={PackageAdd01Icon} ',h('span',{style:{color:'#A3D85C'}},'size'),'={18} ',h('span',{style:{color:'#A3D85C'}},'color'),'=',h('span',{style:{color:'#FCA5A5'}},'"#01787B"'),' />'))
+      ]),
+      h('div',{style:{display:'grid',gridTemplateColumns:'1fr 1fr',gap:18}},
+        this.card([
+          this.subTitle('Sizes · ขนาดที่ใช้'),
+          h('div',{style:{display:'flex',alignItems:'flex-end',gap:26,padding:'4px 0'}},
+            ...[['14','badge'],['18','inline/button'],['20','sidebar'],['22','nav header'],['26','tile'],['34','feature']].map((s,i)=>h('div',{key:i,style:{display:'flex',flexDirection:'column',alignItems:'center',gap:8}},
+              this.ic('box',Number(s[0]),C.pri,1.5),
+              h('span',{style:{fontSize:11,color:C.txDk,fontWeight:600}},s[0]+'px'),
+              h('span',{style:{fontSize:10,color:C.txSb}},s[1]))))
+        ]),
+        this.card([
+          this.subTitle('Color Use · การใช้สีกับไอคอน'),
+          h('div',{style:{display:'flex',gap:14,flexWrap:'wrap'}},
+            ...[['Primary',C.pri,C.priSoft],['Success',C.aGr,C.aBg],['Warning',C.pGr,C.pBg],['Danger',C.lRd,C.lBg],['Info',C.iBl,C.iBg]].map((s,i)=>h('div',{key:i,style:{display:'flex',alignItems:'center',gap:10}},
+              h('div',{style:{width:40,height:40,borderRadius:11,background:s[2],display:'flex',alignItems:'center',justifyContent:'center'}},this.ic('box',19,s[1],1.6)),
+              h('span',{style:{fontSize:12.5,color:C.txMd,fontWeight:600}},s[0]))))
+        ])
+      )
+    );
+  }
+
+  /* ─── 04 BUTTONS ─── */
+  btnSpec(label, el, code){
+    const h=React.createElement; const C=this.C;
+    return h('div',{style:{display:'flex',flexDirection:'column',gap:10}},
+      h('div',{style:{fontSize:12,fontWeight:700,color:C.txMd}},label),
+      h('div',{style:{display:'flex',alignItems:'center',minHeight:46}},el),
+      code?h('span',{style:{fontFamily:this.mono,fontSize:10.5,color:C.txSb,lineHeight:1.4}},code):null);
+  }
+  renderButtons(){
+    const h=React.createElement; const C=this.C; const bf="'Inter','Anuphan',sans-serif";
+    const primary=h('button',{style:{background:C.pri,color:'#fff',border:'none',borderRadius:10,padding:'11px 22px',fontSize:14,fontWeight:600,cursor:'pointer',fontFamily:bf,display:'flex',alignItems:'center',gap:8,boxShadow:'0 4px 14px rgba(1,120,123,0.28)'}},this.ic('inTray',17,'#fff',2),'ยืนยันรับเข้า');
+    const loading=h('button',{style:{background:'rgba(1,120,123,0.5)',color:'#fff',border:'none',borderRadius:10,padding:'11px 22px',fontSize:14,fontWeight:600,fontFamily:bf,display:'flex',alignItems:'center',gap:10}},h('div',{style:{width:16,height:16,border:'2px solid rgba(255,255,255,0.3)',borderTopColor:'#fff',borderRadius:'50%',animation:'spin 0.7s linear infinite'}}),'กำลังบันทึก...');
+    const secondary=h('button',{style:{background:C.card,color:C.txDk,border:`1px solid ${C.border}`,borderRadius:10,padding:'10px 20px',fontSize:14,fontWeight:600,cursor:'pointer',fontFamily:bf,display:'flex',alignItems:'center',gap:7}},'ยกเลิก');
+    const outline=h('button',{style:{background:'transparent',color:C.pri,border:`1.5px solid ${C.pri}`,borderRadius:10,padding:'10px 20px',fontSize:14,fontWeight:600,cursor:'pointer',fontFamily:bf,display:'flex',alignItems:'center',gap:7}},this.ic('plus',16,C.pri,2),'เพิ่มสินค้า');
+    const danger=h('button',{style:{background:C.lRd,color:'#fff',border:'none',borderRadius:10,padding:'10px 20px',fontSize:14,fontWeight:600,cursor:'pointer',fontFamily:bf,display:'flex',alignItems:'center',gap:7}},this.ic('trash',16,'#fff',2),'ลบสินค้า');
+    const ghost=h('button',{style:{background:'transparent',color:C.txMd,border:'none',borderRadius:10,padding:'10px 14px',fontSize:14,fontWeight:600,cursor:'pointer',fontFamily:bf}},'ดูทั้งหมด →');
+    return h('div',{style:{display:'flex',flexDirection:'column',gap:18}},
+      this.card([
+        this.subTitle('Primary, Secondary & Outline'),
+        h('div',{style:{display:'flex',gap:40,flexWrap:'wrap',rowGap:24}},
+          this.btnSpec('Primary · ปุ่มหลัก',primary,'bg pri · radius 10 · shadow'),
+          this.btnSpec('Loading · กำลังโหลด',loading,'opacity 0.5 + spinner'),
+          this.btnSpec('Secondary · ปุ่มรอง',secondary,'border 1px · txDk'),
+          this.btnSpec('Outline · ปุ่มขอบ',outline,'border 1.5px pri · transparent'),
+          this.btnSpec('Destructive · ทำลาย',danger,'bg danger · text #fff'),
+          this.btnSpec('Ghost · ลิงก์',ghost,'no bg/border'))
+      ]),
+      this.card([
+        this.subTitle('Icon & Pill Buttons'),
+        h('div',{style:{display:'flex',gap:40,flexWrap:'wrap',rowGap:20,alignItems:'flex-start'}},
+          this.btnSpec('Icon button',h('button',{style:{width:38,height:38,borderRadius:10,background:C.card,border:`1px solid ${C.border}`,display:'flex',alignItems:'center',justifyContent:'center',cursor:'pointer'}},this.ic('bell',18,C.txMd,1.7)),'38px · border'),
+          this.btnSpec('Icon button · active',h('div',{style:{position:'relative',width:38,height:38,borderRadius:10,background:C.priSoft,display:'flex',alignItems:'center',justifyContent:'center'}},this.ic('bell',18,C.pri,1.8),h('span',{style:{position:'absolute',top:6,right:7,width:8,height:8,borderRadius:'50%',background:C.lRd,border:'1.5px solid #fff'}})),'40px · priSoft bg'),
+          this.btnSpec('Table action',h('span',{style:{color:C.pri,fontSize:13,fontWeight:600,cursor:'pointer'}},'แก้ไข'),'text link · pri'),
+          this.btnSpec('Table action · danger',h('span',{style:{color:C.lRd,fontSize:13,fontWeight:600,cursor:'pointer'}},'ลบ'),'text link · danger'))
+      ])
+    );
+  }
+
+  /* ─── 05 FORMS ─── */
+  renderForms(){
+    const h=React.createElement; const C=this.C; const bf="'Inter','Anuphan',sans-serif";
+    const field=(label,icon,val,err,ph)=>h('div',{},
+      h('div',{style:{fontSize:13,fontWeight:600,color:C.txDk,marginBottom:6}},label),
+      h('div',{style:{background:C.card,border:`1px solid ${err?C.lRd:C.border}`,borderRadius:10,padding:'10px 13px',display:'flex',alignItems:'center',gap:8}},
+        icon?this.ic(icon,17,C.txSb):null,
+        h('span',{style:{flex:1,fontSize:14,color:val?C.txDk:C.txSb,fontFamily:bf}},val||ph)),
+      err?h('div',{style:{fontSize:11,color:C.lRd,marginTop:5,display:'flex',alignItems:'center',gap:5}},this.ic('xCircle',13,C.lRd,2),err):null);
+    const select=(label,val)=>h('div',{},
+      h('div',{style:{fontSize:13,fontWeight:600,color:C.txDk,marginBottom:6}},label),
+      h('div',{style:{background:C.card,border:`1px solid ${C.border}`,borderRadius:10,padding:'10px 13px',display:'flex',alignItems:'center',justifyContent:'space-between',gap:8}},
+        h('span',{style:{fontSize:14,color:C.txDk,fontFamily:bf}},val),
+        this.ic('chevronD',16,C.txSb,2)));
+    const sw=(on)=>h('div',{style:{width:42,height:24,borderRadius:20,background:on?C.pri:C.border,position:'relative',flexShrink:0}},h('div',{style:{position:'absolute',top:3,left:on?21:3,width:18,height:18,borderRadius:'50%',background:'#fff',boxShadow:'0 1px 3px rgba(0,0,0,0.3)'}}));
+    const chip=(label,active)=>h('span',{style:{background:active?C.pri:C.card,color:active?'#fff':C.txMd,border:`1px solid ${active?C.pri:C.border}`,borderRadius:20,padding:'6px 15px',fontSize:12,fontWeight:active?700:400,fontFamily:bf}},label);
+    return h('div',{style:{display:'flex',flexDirection:'column',gap:18}},
+      h('div',{style:{display:'grid',gridTemplateColumns:'1fr 1fr',gap:18}},
+        this.card([ this.subTitle('Text Input · ช่องกรอก'), h('div',{style:{display:'flex',flexDirection:'column',gap:16}}, field('อีเมล','mail','','','you@example.com'), field('รหัสผ่าน','lock','','รหัสผ่านไม่ถูกต้อง','••••••••')) ]),
+        this.card([ this.subTitle('Select · เลือกสินค้า'), h('div',{style:{display:'flex',flexDirection:'column',gap:16}}, select('เลือกสินค้า','SKU-1001 · น้ำดื่ม 600ml (ลัง)'), select('สถานะ','ใกล้หมด')) ])
+      ),
+      this.card([
+        this.subTitle('Toggle, Segmented & Filter Chips'),
+        h('div',{style:{display:'flex',alignItems:'center',gap:28,flexWrap:'wrap'}},
+          h('div',{style:{display:'flex',alignItems:'center',gap:10}}, sw(true), h('span',{style:{fontSize:13,color:C.txDk,fontWeight:600}},'โหมดมืด')),
+          h('div',{style:{display:'flex',gap:8}}, chip('ทั้งหมด',true), chip('ปกติ',false), chip('ใกล้หมด',false), chip('หมดสต็อก',false)))
+      ])
+    );
+  }
+
+  /* ─── 06 SURFACES & BADGES ─── */
+  badge(label,bg,tx,dot){
+    const h=React.createElement;
+    return h('span',{style:{display:'inline-flex',alignItems:'center',gap:6,background:bg,color:tx,fontSize:11,fontWeight:700,padding:'4px 12px',borderRadius:20}},dot?h('span',{style:{width:7,height:7,borderRadius:'50%',background:dot,display:'block'}}):null,label);
+  }
+  renderSurfaces(){
+    const h=React.createElement; const C=this.C;
+    const kpi=h('div',{style:{background:C.card,borderRadius:16,padding:'18px 20px',border:`1px solid ${C.border}`,boxShadow:'0 1px 3px rgba(1,45,46,0.06)'}},
+      h('div',{style:{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:12}},
+        h('div',{style:{width:38,height:38,borderRadius:10,background:C.priSoft,display:'flex',alignItems:'center',justifyContent:'center'}},this.ic('box',19,C.pri,1.7)),
+        h('span',{style:{fontSize:11,color:C.txSb,fontWeight:600}},'รวม')),
+      h('div',{style:{fontSize:12.5,color:C.txMd,marginBottom:4}},'สินค้าทั้งหมด'),
+      h('div',{style:{fontSize:26,fontWeight:700,color:C.txDk}},'7 รายการ'));
+    const tableRow=h('div',{style:{display:'grid',gridTemplateColumns:'90px 1fr 70px 90px',gap:12,alignItems:'center',padding:'12px 14px',background:C.card,borderRadius:12,border:`1px solid ${C.border}`}},
+      h('span',{style:{fontFamily:this.mono,fontSize:11.5,color:C.txSb}},'SKU-1001'),
+      h('div',{},h('div',{style:{fontSize:13,fontWeight:700,color:C.txDk}},'น้ำดื่ม 600ml (ลัง)'),h('div',{style:{fontSize:11,color:C.txSb}},'เครื่องดื่ม')),
+      h('span',{style:{fontSize:13,fontWeight:700,color:C.txDk}},'428'),
+      this.badge('ปกติ',C.aBg,C.aTx,C.aGr));
+    return h('div',{style:{display:'flex',flexDirection:'column',gap:18}},
+      h('div',{style:{display:'grid',gridTemplateColumns:'1fr 1fr',gap:18,alignItems:'start'}},
+        this.card([ this.subTitle('KPI Card'), kpi ]),
+        this.card([ this.subTitle('Table Row · แถวตาราง'), tableRow ])
+      ),
+      this.card([
+        this.subTitle('Status Badges · สถานะสต็อก'),
+        h('div',{style:{display:'flex',flexDirection:'column',gap:16}},
+          h('div',{},
+            h('div',{style:{fontSize:12,color:C.txSb,marginBottom:9}},'สถานะสินค้า · Product Status'),
+            h('div',{style:{display:'flex',gap:10,flexWrap:'wrap'}},this.badge('ปกติ',C.aBg,C.aTx,C.aGr),this.badge('ใกล้หมด',C.pBg,C.pTx,C.pGr),this.badge('หมดสต็อก',C.lBg,C.lTx,C.lRd))),
+          h('div',{},
+            h('div',{style:{fontSize:12,color:C.txSb,marginBottom:9}},'ประเภทรายการ · Transaction Type'),
+            h('div',{style:{display:'flex',gap:10,flexWrap:'wrap'}},this.badge('รับเข้า',C.aBg,C.aTx,C.aGr),this.badge('เบิกจ่าย',C.pBg,C.pTx,C.pGr))))
+      ]),
+      this.card([
+        this.subTitle('Alert Banner · แถบแจ้งเตือน'),
+        h('div',{style:{display:'flex',alignItems:'center',gap:12,background:C.pBg,border:`1px solid ${C.pGr}33`,borderRadius:12,padding:'14px 16px'}},
+          this.ic('alertTri',20,C.pGr,1.7),
+          h('div',{style:{flex:1,fontSize:13,color:C.pTx}},'มีสินค้า 2 รายการที่ยอดคงเหลือต่ำกว่าจุดสั่งซื้อ และ 1 รายการหมดสต็อกแล้ว'),
+          h('span',{style:{background:C.pGr,color:'#fff',fontSize:12,fontWeight:700,padding:'7px 14px',borderRadius:9,whiteSpace:'nowrap'}},'ดูรายการ'))
+      ])
+    );
+  }
+
+  /* ─── 07 NAVIGATION ─── */
+  navItem(label,icon,active,badge){
+    const h=React.createElement; const C=this.C;
+    return h('div',{style:{display:'flex',alignItems:'center',gap:11,padding:'10px 12px',borderRadius:10,background:active?'rgba(255,255,255,0.14)':'transparent',color:active?'#fff':'rgba(255,255,255,0.6)',fontSize:13.5,fontWeight:active?700:500,fontFamily:"'Inter','Anuphan',sans-serif"}},
+      this.ic(icon,18,active?'#fff':'rgba(255,255,255,0.6)',1.7),
+      h('span',{style:{flex:1}},label),
+      badge?h('span',{style:{background:C.lRd,color:'#fff',fontSize:10.5,fontWeight:700,borderRadius:20,padding:'1px 7px'}},badge):null);
+  }
+  renderNav(){
+    const h=React.createElement; const C=this.C;
+    const sidebar=h('div',{style:{width:240,background:C.priDk,borderRadius:16,padding:'20px 14px',display:'flex',flexDirection:'column',gap:2}},
+      h('div',{style:{display:'flex',alignItems:'center',gap:10,padding:'0 8px 20px'}},
+        h('div',{style:{width:34,height:34,borderRadius:9,background:'linear-gradient(135deg,#0EA1A0,#01787B)'}}),
+        h('div',{},h('div',{style:{color:'#fff',fontSize:14,fontWeight:700}},'Genius Stock'),h('div',{style:{color:'rgba(255,255,255,0.5)',fontSize:10.5}},'ระบบคลังสินค้าเบิกจ่าย'))),
+      h('div',{style:{color:'rgba(255,255,255,0.4)',fontSize:10.5,fontWeight:700,letterSpacing:'0.06em',textTransform:'uppercase',padding:'4px 12px 8px'}},'เมนูหลัก'),
+      this.navItem('ภาพรวม','grid',true),
+      this.navItem('สินค้า','box',false),
+      this.navItem('รับสินค้าเข้า','inTray',false),
+      this.navItem('เบิกจ่ายสินค้า','outTray',false),
+      this.navItem('สินค้าใกล้หมด','alertTri',false,'3'),
+      h('div',{style:{color:'rgba(255,255,255,0.4)',fontSize:10.5,fontWeight:700,letterSpacing:'0.06em',textTransform:'uppercase',padding:'16px 12px 8px'}},'อื่น ๆ'),
+      this.navItem('รายงาน','chart',false),
+      this.navItem('ผู้ใช้งาน','users',false),
+      this.navItem('ตั้งค่า','settings',false));
+    const topbar=h('div',{style:{background:C.card,borderRadius:16,border:`1px solid ${C.border}`,padding:'14px 20px',display:'flex',alignItems:'center',justifyContent:'space-between'}},
+      h('div',{},h('div',{style:{fontSize:16,fontWeight:700,color:C.txDk}},'ภาพรวมคลังสินค้า'),h('div',{style:{fontSize:11.5,color:C.txSb,marginTop:2}},'วันศุกร์ที่ 10 กรกฎาคม 2569')),
+      h('div',{style:{display:'flex',alignItems:'center',gap:12}},
+        h('div',{style:{width:36,height:36,borderRadius:10,background:C.bg,border:`1px solid ${C.border}`,display:'flex',alignItems:'center',justifyContent:'center'}},this.ic('moon',17,C.txMd,1.7)),
+        h('div',{style:{position:'relative',width:36,height:36,borderRadius:10,background:C.bg,border:`1px solid ${C.border}`,display:'flex',alignItems:'center',justifyContent:'center'}},this.ic('bell',17,C.txMd,1.7),h('span',{style:{position:'absolute',top:7,right:8,width:7,height:7,borderRadius:'50%',background:C.lRd}})),
+        h('div',{style:{width:36,height:36,borderRadius:10,background:C.pri,color:'#fff',display:'flex',alignItems:'center',justifyContent:'center',fontSize:13,fontWeight:700}},'ส')));
+    return h('div',{style:{display:'flex',flexDirection:'column',gap:18}},
+      this.card([this.subTitle('Sidebar · เมนูด้านข้าง'), sidebar], 24),
+      this.card([this.subTitle('Topbar · แถบด้านบน'), topbar])
+    );
+  }
+
+  /* ─── 08 TOKENS ─── */
+  renderTokens(){
+    const h=React.createElement; const C=this.C;
+    const radii=[['8','input'],['10','button / icon tile'],['12','table row'],['16','card'],['20','badge / pill'],['24','hero panel']];
+    const shadows=[['Card','0 1px 3px rgba(1,45,46,0.08)'],['Elevated','0 8px 24px rgba(1,45,46,0.12)'],['Button','0 4px 14px rgba(1,120,123,0.28)']];
+    const spaces=[['4','xs'],['8','base gap'],['12','gutter'],['16','card pad'],['20','section'],['24','block']];
+    return h('div',{style:{display:'flex',flexDirection:'column',gap:18}},
+      this.card([
+        this.subTitle('Border Radius · มุมโค้ง'),
+        h('div',{style:{display:'flex',gap:20,flexWrap:'wrap'}},
+          ...radii.map((r,i)=>h('div',{key:i,style:{display:'flex',flexDirection:'column',alignItems:'center',gap:8}},
+            h('div',{style:{width:64,height:64,background:C.pri,borderRadius:Number(r[0])}}),
+            h('span',{style:{fontFamily:this.mono,fontSize:12,fontWeight:600,color:C.txDk}},r[0]+'px'),
+            h('span',{style:{fontSize:10.5,color:C.txSb}},r[1]))))
+      ]),
+      h('div',{style:{display:'grid',gridTemplateColumns:'1fr 1fr',gap:18}},
+        this.card([
+          this.subTitle('Elevation · เงา'),
+          h('div',{style:{display:'flex',flexDirection:'column',gap:18,padding:'4px 0'}},
+            ...shadows.map((s,i)=>h('div',{key:i,style:{display:'flex',alignItems:'center',gap:16}},
+              h('div',{style:{width:54,height:38,background:C.card,borderRadius:10,boxShadow:s[1],flexShrink:0}}),
+              h('div',{},h('div',{style:{fontSize:12.5,fontWeight:700,color:C.txDk}},s[0]),h('span',{style:{fontFamily:this.mono,fontSize:10,color:C.txSb}},s[1])))))
+        ]),
+        this.card([
+          this.subTitle('Spacing · ระยะห่าง'),
+          h('div',{style:{display:'flex',flexDirection:'column',gap:11,padding:'4px 0'}},
+            ...spaces.map((s,i)=>h('div',{key:i,style:{display:'flex',alignItems:'center',gap:14}},
+              h('div',{style:{width:Number(s[0])*2,height:14,background:C.gold,borderRadius:3,flexShrink:0}}),
+              h('span',{style:{fontFamily:this.mono,fontSize:12,fontWeight:600,color:C.txDk,width:42}},s[0]+'px'),
+              h('span',{style:{fontSize:11.5,color:C.txSb}},s[1]))))
+        ])
+      )
+    );
+  }
+
+  renderVals(){
+    return {
+      coverChips: this.renderCoverChips(),
+      colorsBlock: this.renderColors(),
+      typeBlock: this.renderType(),
+      iconsBlock: this.renderIcons(),
+      buttonsBlock: this.renderButtons(),
+      formsBlock: this.renderForms(),
+      surfacesBlock: this.renderSurfaces(),
+      navBlock: this.renderNav(),
+      tokensBlock: this.renderTokens(),
+    };
+  }
+}
+
+</script>
+</body>
+</html>

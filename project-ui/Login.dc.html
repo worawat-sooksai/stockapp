@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { margin:0; font-family:'Inter','Anuphan',sans-serif; }
+    a { color:#01787B; }
+    a:hover { color:#014C4E; }
+  </style>
+</helmet>
+
+<div style="{{ outerStyle }}">
+
+  <!-- LEFT: brand panel -->
+  <div style="{{ leftPanelStyle }}">
+    <div style="position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,0.14) 1.5px, transparent 1.5px);background-size:22px 22px;opacity:0.5"></div>
+    <div style="position:absolute;right:-90px;top:-90px;width:320px;height:320px;border-radius:50%;background:rgba(255,255,255,0.06)"></div>
+    <div style="position:absolute;left:-60px;bottom:-100px;width:260px;height:260px;border-radius:50%;background:rgba(217,143,43,0.14)"></div>
+
+    <div style="position:relative;z-index:1;display:flex;align-items:center;gap:12px">
+      <div style="width:44px;height:44px;border-radius:12px;background:rgba(255,255,255,0.97);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(0,0,0,0.18)" data-comment-anchor="8cd2ff93f4-div">
+        <div style="width:22px;height:22px;border-radius:6px;background:#D98F2B"></div>
+      </div>
+      <div>
+        <div style="color:#fff;font-size:17px;font-weight:700">Genius Stock</div>
+        <div style="color:rgba(255,255,255,0.65);font-size:12px">ระบบคลังสินค้าเบิกจ่าย</div>
+      </div>
+    </div>
+
+    <div style="position:relative;z-index:1;flex:1;display:flex;flex-direction:column;justify-content:center;max-width:480px">
+      <h1 style="color:#fff;font-size:44px;font-weight:700;line-height:1.25;margin:0 0 16px;letter-spacing:-0.01em" data-comment-anchor="2ef04cb1e1-h1">จัดการคลังสินค้า<br/>อย่างชาญฉลาด</h1>
+      <p style="color:rgba(255,255,255,0.78);font-size:15px;line-height:1.7;margin:0 0 32px">ระบบเบิกจ่ายสินค้าที่ออกแบบมาเพื่อประสิทธิภาพสูงสุดขององค์กรคุณ ป้องกันสต็อกเพี้ยน และเห็นภาพรวมได้แบบเรียลไทม์</p>
+      <div style="{{ featureListStyle }}">
+        {{ featureRows }}
+      </div>
+    </div>
+
+    <div style="{{ footerStyle }}">© 2569 Genius Stock · IT Genius Engineering</div>
+  </div>
+
+  <!-- RIGHT: form panel -->
+  <div style="{{ rightPanelStyle }}">
+    <div style="display:flex;justify-content:flex-end">
+      <button style="width:38px;height:38px;border-radius:10px;background:var(--card);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer" onClick="{{ toggleTheme }}">{{ themeIcon }}</button>
+    </div>
+
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;max-width:380px;margin:0 auto;width:100%">
+      <h2 style="font-size:24px;font-weight:700;color:var(--text-dk);margin:0 0 6px">เข้าสู่ระบบ</h2>
+      <p style="font-size:13.5px;color:var(--text-sb);margin:0 0 28px">กรอกอีเมลและรหัสผ่านเพื่อเข้าใช้งาน Genius Stock</p>
+
+      <div style="display:flex;flex-direction:column;gap:18px">
+        <div>
+          <label style="display:block;font-size:13px;font-weight:600;color:var(--text-dk);margin-bottom:6px">อีเมล</label>
+          <div style="display:flex;align-items:center;gap:8px;border:1px solid var(--border);border-radius:10px;padding:11px 14px;background:var(--card)">
+            {{ mailIcon }}
+            <input type="email" placeholder="you@example.com" style="border:none;outline:none;flex:1;font-size:14px;font-family:'Inter','Anuphan',sans-serif;color:var(--text-dk);background:transparent"/>
+          </div>
+        </div>
+        <div>
+          <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px">
+            <label style="font-size:13px;font-weight:600;color:var(--text-dk)">รหัสผ่าน</label>
+            <a href="./Forgot Password.dc.html" style="font-size:12.5px;font-weight:600;text-decoration:none">ลืมรหัสผ่าน?</a>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;border:1px solid var(--border);border-radius:10px;padding:11px 14px;background:var(--card)">
+            {{ lockIcon }}
+            <input type="password" placeholder="••••••••" style="border:none;outline:none;flex:1;font-size:14px;font-family:'Inter','Anuphan',sans-serif;color:var(--text-dk);background:transparent"/>
+            <button style="border:none;background:transparent;cursor:pointer;padding:0;display:flex">{{ eyeIcon }}</button>
+          </div>
+        </div>
+
+        <button style="margin-top:6px;background:#01787B;color:#fff;border:none;border-radius:10px;padding:13px;font-size:14.5px;font-weight:700;cursor:pointer;box-shadow:0 4px 14px rgba(1,120,123,0.28);font-family:'Inter','Anuphan',sans-serif" onClick="{{ goToDashboard }}">เข้าสู่ระบบ</button>
+
+        <div style="text-align:center;font-size:13px;color:var(--text-sb);margin-top:4px">ยังไม่มีบัญชี? <a href="./Register.dc.html" style="font-weight:700;text-decoration:none">สมัครสมาชิก</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  constructor(props){
+    super(props);
+    const savedTheme = (typeof localStorage!=='undefined' && localStorage.getItem('geniusstock-theme')) || 'light';
+    this.state = { width: (typeof window!=='undefined'?window.innerWidth:1280), theme:savedTheme };
+    this.onResize = () => this.setState({ width: window.innerWidth });
+  }
+  toggleTheme = () => this.setState(s=>{
+    const next = s.theme==='dark' ? 'light' : 'dark';
+    if (typeof localStorage!=='undefined') localStorage.setItem('geniusstock-theme', next);
+    return { theme: next };
+  });
+  componentDidMount(){ window.addEventListener('resize', this.onResize); }
+  componentWillUnmount(){ window.removeEventListener('resize', this.onResize); }
+  get bp(){ const w=this.state.width; if(w<640) return 'mobile'; if(w<1024) return 'tablet'; return 'desktop'; }
+
+  ic(name, size, color, sw) {
+    const h = React.createElement;
+    size = size || 18; color = color || 'currentColor'; sw = sw || 1.7;
+    const P = {
+      check: [["path",{"d":"M22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C17.5228 22 22 17.5228 22 12Z"}],["path",{"d":"M8 12.5L10.5 15L16 9"}]],
+      mail: [["path",{"d":"M2 6L8.91302 9.91697C11.4616 11.361 12.5384 11.361 15.087 9.91697L22 6"}],["path",{"d":"M2.01577 13.4756C2.08114 16.5412 2.11383 18.0739 3.24496 19.2094C4.37608 20.3448 5.95033 20.3843 9.09883 20.4634C11.0393 20.5122 12.9607 20.5122 14.9012 20.4634C18.0497 20.3843 19.6239 20.3448 20.7551 19.2094C21.8862 18.0739 21.9189 16.5412 21.9842 13.4756C22.0053 12.4899 22.0053 11.5101 21.9842 10.5244C21.9189 7.45886 21.8862 5.92609 20.7551 4.79066C19.6239 3.65523 18.0497 3.61568 14.9012 3.53657C12.9607 3.48781 11.0393 3.48781 9.09882 3.53656C5.95033 3.61566 4.37608 3.65521 3.24495 4.79065C2.11382 5.92608 2.08114 7.45885 2.01576 10.5244C1.99474 11.5101 1.99475 12.4899 2.01577 13.4756Z"}]],
+      lock: [["path",{"d":"M12 16.5V14.5"}],["path",{"d":"M4.2678 18.8447C4.49268 20.515 5.87612 21.8235 7.55965 21.9009C8.97627 21.966 10.4153 22 12 22C13.5847 22 15.0237 21.966 16.4403 21.9009C18.1239 21.8235 19.5073 20.515 19.7322 18.8447C19.8789 17.7547 20 16.6376 20 15.5C20 14.3624 19.8789 13.2453 19.7322 12.1553C19.5073 10.485 18.1239 9.17649 16.4403 9.09909C15.0237 9.03397 13.5847 9 12 9C10.4153 9 8.97627 9.03397 7.55965 9.09909C5.87612 9.17649 4.49268 10.485 4.2678 12.1553C4.12104 13.2453 3.99999 14.3624 3.99999 15.5C3.99999 16.6376 4.12104 17.7547 4.2678 18.8447Z"}],["path",{"d":"M7.5 9V6.5C7.5 4.01472 9.51472 2 12 2C14.4853 2 16.5 4.01472 16.5 6.5V9"}]],
+      eye: [["path",{"d":"M21.544 11.045C21.848 11.4713 22 11.6845 22 12C22 12.3155 21.848 12.5287 21.544 12.955C20.1779 14.8706 16.6892 19 12 19C7.31078 19 3.8221 14.8706 2.45604 12.955C2.15201 12.5287 2 12.3155 2 12C2 11.6845 2.15201 11.4713 2.45604 11.045C3.8221 9.12944 7.31078 5 12 5C16.6892 5 20.1779 9.12944 21.544 11.045Z"}],["path",{"d":"M15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15C13.6569 15 15 13.6569 15 12Z"}]],
+      moon: [["path",{"d":"M21.5 14.0784C20.3003 14.7189 18.9301 15.0821 17.4751 15.0821C12.7491 15.0821 8.91792 11.2509 8.91792 6.52485C8.91792 5.06986 9.28105 3.69968 9.92163 2.5C5.66765 3.49698 2.5 7.31513 2.5 11.8731C2.5 17.1899 6.8101 21.5 12.1269 21.5C16.6849 21.5 20.503 18.3324 21.5 14.0784Z"}]],
+      sun: [["path",{"d":"M17 12C17 14.7614 14.7614 17 12 17C9.23858 17 7 14.7614 7 12C7 9.23858 9.23858 7 12 7C14.7614 7 17 9.23858 17 12Z"}],["path",{"d":"M12 2V3.5M12 20.5V22M19.0708 19.0713L18.0101 18.0106M5.98926 5.98926L4.9286 4.9286M22 12H20.5M3.5 12H2M19.0713 4.92871L18.0106 5.98937M5.98975 18.0107L4.92909 19.0714"}]],
+    };
+    return h('svg', {viewBox:'0 0 24 24', width:size, height:size, fill:'none', stroke:color, strokeWidth:sw, strokeLinecap:'round', strokeLinejoin:'round', style:{display:'block',flexShrink:0}},
+      ...(P[name]||[]).map((p,i) => h(p[0], {key:i, ...p[1]})));
+  }
+  renderFeatureRows(){
+    const h = React.createElement;
+    const items = ['ติดตามสต็อกแบบ Real-time','ป้องกันการเบิกเกินจำนวน','รายงานการเคลื่อนไหวครบถ้วน'];
+    return items.map((t,i)=>h('div',{key:i,style:{display:'flex',alignItems:'center',gap:10}},
+      h('div',{style:{width:22,height:22,borderRadius:'50%',background:'rgba(255,255,255,0.16)',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0}},this.ic('check',13,'#fff',2.2)),
+      h('span',{style:{color:'rgba(255,255,255,0.9)',fontSize:13.5}},t)));
+  }
+  renderVals(){
+    const bp=this.bp; const isDesktop=bp==='desktop'; const isMobile=bp==='mobile';
+    return {
+      featureRows: this.renderFeatureRows(),
+      themeIcon: this.state.theme==='dark' ? this.ic('sun',17,'#9FB8B9',1.7) : this.ic('moon',16,'#4B6367',1.7),
+      toggleTheme: this.toggleTheme,
+      mailIcon: this.ic('mail',17,'#7E9598'),
+      lockIcon: this.ic('lock',17,'#7E9598'),
+      eyeIcon: this.ic('eye',17,'#7E9598'),
+      goToDashboard: () => { window.location.href = './Dashboard.dc.html'; },
+      outerStyle: { width:'100%', minHeight:'100vh', display:'flex', flexDirection:isDesktop?'row':'column', background:'var(--bg)',
+        '--bg': this.state.theme==='dark'?'#0B1E1F':'#F4F7F7', '--card': this.state.theme==='dark'?'#12292A':'#FFFFFF',
+        '--border': this.state.theme==='dark'?'#1F3B3C':'#DCE6E6', '--text-dk': this.state.theme==='dark'?'#E7F3F3':'#0F2A2B',
+        '--text-sb': this.state.theme==='dark'?'#8FA9AB':'#7E9598' },
+      leftPanelStyle: { flex:isDesktop?1:'none', minWidth:isDesktop?440:'auto', background:'linear-gradient(160deg,#0EA1A0 0%,#01787B 55%,#014C4E 100%)', position:'relative', overflow:'hidden',
+        padding: isDesktop?'48px':(bp==='tablet'?'36px':'28px 24px'), display:'flex', flexDirection:'column', minHeight:isDesktop?'auto':(isMobile?'auto':420) },
+      featureListStyle: { display: isMobile?'none':'flex', flexDirection:'column', gap:14 },
+      footerStyle: { position:'relative', zIndex:1, color:'rgba(255,255,255,0.5)', fontSize:12.5, display:isMobile?'none':'block', marginTop:isDesktop?0:20 },
+      rightPanelStyle: { flex:1, minWidth:isDesktop?460:'auto', display:'flex', flexDirection:'column', padding: isDesktop?'32px 56px':(bp==='tablet'?'28px 40px':'24px 20px'), position:'relative', boxSizing:'border-box' },
+    };
+  }
+}
+
+</script>
+</body>
+</html>
