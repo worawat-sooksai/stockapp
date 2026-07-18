@@ -208,7 +208,7 @@ model StockTransaction {
 - [x] Build + smoke test ผ่าน — image `stock-app:latest` ขนาด **295 MB**, `GET /login` → 200, ยืนยันรันเป็น non-root
 - [x] `docker-compose.yml`: 3 services — `db` (postgres:17-alpine + healthcheck), `migrate` (one-shot `migrate deploy` + seed, `restart: "no"`), `app` (รอ `db` healthy + `migrate` สำเร็จ) บน network `stock-network` + volume `postgres_data`
 - [x] Healthcheck endpoint `/api/health` — `prisma.$queryRaw SELECT 1` + timeout 5s, DB ล่ม → **503**, ผูกเข้า `healthcheck:` ของ service `app` แล้ว
-- [ ] CI ด้วย GitHub Actions: build + push image ไป `ghcr.io`
+- [x] CI ด้วย GitHub Actions: build + push image ไป `ghcr.io` — `.github/workflows/ci.yml` job `test` (typecheck + vitest + verify migrations บน postgres 17 service) → job `build-and-push` (เฉพาะ push เข้า `main`, GHA cache)
 
 **Gotchas ที่เจอจริงตอนทำ Phase 4** (เก็บไว้กันทีมเสียเวลาซ้ำ)
 
@@ -229,6 +229,8 @@ model StockTransaction {
    ข้อมูลจะหายทุก restart → กั้นด้วย `RUN_SEED` (default `false`) ต้องสั่งชัดเจนถึงจะ seed
 7. **ห้ามใส่ `container_name:`** — ชนกับ dev container `stockapp-db` ที่รันอยู่แล้ว
    ปล่อยให้ compose ตั้งชื่อ prefix ตาม project เพื่อรันหลาย stack พร้อมกันได้
+8. **CI ต้องใช้ pnpm 11 เท่านั้น** — pnpm 9 อ่าน `pnpm-workspace.yaml` ที่มีแต่ `allowBuilds` ไม่ได้
+   (`ERROR packages field missing or empty`) เพราะ `allowBuilds` เป็นฟีเจอร์ pnpm 10+ ทดสอบยืนยันแล้ว
 
 ### Phase 5 — Production (วันที่ 5)
 นำขึ้น production จริงพร้อมความปลอดภัยและ monitoring
