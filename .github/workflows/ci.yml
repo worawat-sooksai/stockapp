@@ -36,15 +36,15 @@ jobs:
       DATABASE_URL: postgresql://stock:stock@localhost:5432/stockapp?schema=public
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       # ต้องเป็น 11 ไม่ใช่ 9 — pnpm 9 อ่าน pnpm-workspace.yaml ที่มีแต่ `allowBuilds`
       # ไม่ได้ ("ERROR packages field missing or empty") เพราะ allowBuilds เป็นฟีเจอร์ pnpm 10+
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v6
         with:
           version: 11
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: pnpm
@@ -77,7 +77,7 @@ jobs:
       packages: write
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - uses: docker/setup-buildx-action@v3
 
