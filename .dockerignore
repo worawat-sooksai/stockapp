@@ -1,0 +1,17 @@
+node_modules
+.next
+.git
+.env
+.env.local
+__tests__
+docs
+project-ui
+*.zip
+*.pdf
+*.docx
+src/generated
+README.md
+CLAUDE.md
+.claude
+Dockerfile
+.dockerignore

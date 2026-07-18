@@ -1,0 +1,82 @@
+services:
+  # ---------- 1. db ----------
+  db:
+    # ต้องตรงกับ dev container (CLAUDE.md ระบุ PostgreSQL 17)
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-stock}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-stock}
+      POSTGRES_DB: ${POSTGRES_DB:-stockapp}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - stock-network
+    healthcheck:
+      # ระบุ -U/-d ให้ตรง ไม่งั้น pg_isready เช็คด้วย user `root` แล้ว fail
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-stock} -d ${POSTGRES_DB:-stockapp}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+  # ---------- 2. migrate (one-shot) ----------
+  migrate:
+    build:
+      context: .
+      target: migrator
+    restart: "no"
+    environment:
+      # ประกอบเองจาก POSTGRES_* — host ต้องเป็น `db` (ชื่อ service) เสมอ
+      # ไม่อ่าน ${DATABASE_URL} จาก .env เพราะค่านั้นเป็น localhost ไว้ให้ `pnpm dev`
+      DATABASE_URL: postgresql://${POSTGRES_USER:-stock}:${POSTGRES_PASSWORD:-stock}@db:5432/${POSTGRES_DB:-stockapp}?schema=public
+      # true = ล้างข้อมูลเดิมทั้งหมดแล้ว seed ใหม่ — ใช้เฉพาะ dev
+      RUN_SEED: ${RUN_SEED:-false}
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - stock-network
+
+  # ---------- 3. app ----------
+  app:
+    build:
+      context: .
+      target: runner
+      args:
+        # NEXT_PUBLIC_* ต้องส่งตอน build (inline เข้า client bundle) ไม่ใช่ตอน runtime
+        # อิง APP_PORT เพื่อให้ตรงกับ port ที่ publish จริง
+        NEXT_PUBLIC_APP_URL: http://localhost:${APP_PORT:-3000}
+    image: stock-app:latest
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-stock}:${POSTGRES_PASSWORD:-stock}@db:5432/${POSTGRES_DB:-stockapp}?schema=public
+      BETTER_AUTH_SECRET: ${BETTER_AUTH_SECRET:?ต้องตั้ง BETTER_AUTH_SECRET ใน .env}
+      BETTER_AUTH_URL: http://localhost:${APP_PORT:-3000}
+    ports:
+      - "${APP_PORT:-3000}:3000"
+    depends_on:
+      db:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+    networks:
+      - stock-network
+    healthcheck:
+      # image runner เป็น node:22-alpine — มี wget (busybox) แต่ไม่มี curl
+      # ต้องใช้ 127.0.0.1 ไม่ใช่ localhost: /etc/hosts ผูก localhost กับ ::1 ด้วย
+      # busybox wget ลอง IPv6 ก่อน แต่ Next bind 0.0.0.0 (IPv4) → connection refused
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+
+networks:
+  stock-network:
+    driver: bridge
+
+volumes:
+  postgres_data:

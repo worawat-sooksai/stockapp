@@ -187,23 +187,48 @@ model StockTransaction {
 ### Phase 3 — Agentic Quality (วันที่ 3)
 ยกระดับคุณภาพด้วย agents, MCP และ automation
 
-- [ ] Custom Slash Commands สำหรับงานที่ทำบ่อย (เช่น สร้างสินค้า, seed, ตรวจสต็อก) - ย้ายมาจาก Phase 2, ยังไม่ทำ
-- [ ] Sub-agent: `code-reviewer` — รีวิวโค้ดอัตโนมัติ
-- [ ] Sub-agent: `test-writer` — เขียน/เสริมเทสต์
-- [ ] Sub-agent: `security-auditor` — ตรวจช่องโหว่ความปลอดภัย
-- [ ] MCP integration: PostgreSQL MCP (query/inspect ฐานข้อมูล)
-- [ ] MCP integration: GitHub MCP (จัดการ issue/PR)
-- [ ] Hooks: รัน lint / format / test อัตโนมัติหลังแก้ไขโค้ด
+- [x] Custom Slash Commands สำหรับงานที่ทำบ่อย — `/add-feature`, `/create-crud`, `/review-code` (`.claude/commands/`)
+- [x] Skill: `stock-report` — สร้างรายงานสถานะสต็อกรูปแบบมาตรฐาน (`.claude/skills/stock-report/`)
+- [x] Sub-agent: `code-reviewer` — รีวิวโค้ดอัตโนมัติ
+- [x] Sub-agent: `test-writer` — เขียน/เสริมเทสต์
+- [x] Sub-agent: `security-auditor` — ตรวจช่องโหว่ความปลอดภัย
+- [ ] MCP integration: PostgreSQL MCP (query/inspect ฐานข้อมูล) — ยังไม่มี `.mcp.json`
+- [ ] MCP integration: GitHub MCP (จัดการ issue/PR) — ยังไม่มี `.mcp.json`
+- [ ] Hooks: รัน lint / format / test อัตโนมัติหลังแก้ไขโค้ด — ยังไม่มี `.claude/settings.json`
 
 ### Phase 4 — Team & Containerization (วันที่ 4)
 เตรียมทำงานเป็นทีมและ containerize
 
-- [ ] แชร์ `.claude/` config ผ่าน Git ให้ทีมใช้ร่วมกัน
+- [x] แชร์ `.claude/` config ผ่าน Git ให้ทีมใช้ร่วมกัน — agents / commands / skills ถูก track แล้ว
 - [ ] Git workflow: commit message convention (เช่น Conventional Commits)
-- [ ] PR template + แนวทาง code review
-- [ ] `Dockerfile` แบบ multi-stage build (Next.js `standalone` output)
-- [ ] `docker-compose.yml`: app + postgres
+- [ ] PR template + แนวทาง code review — ยังไม่มีโฟลเดอร์ `.github/`
+- [x] เปิด `output: "standalone"` ใน `next.config.ts`
+- [x] `Dockerfile` แบบ multi-stage build (Next.js `standalone` output) — 4 stage (base/deps/builder/runner), `node:22-alpine` + pnpm 11, รันด้วย non-root `nextjs:nodejs` (uid 1001)
+- [x] `.dockerignore` — กัน `node_modules`, `.next`, `.env`, `src/generated` หลุดเข้า build context
+- [x] Build + smoke test ผ่าน — image `stock-app:latest` ขนาด **295 MB**, `GET /login` → 200, ยืนยันรันเป็น non-root
+- [x] `docker-compose.yml`: 3 services — `db` (postgres:17-alpine + healthcheck), `migrate` (one-shot `migrate deploy` + seed, `restart: "no"`), `app` (รอ `db` healthy + `migrate` สำเร็จ) บน network `stock-network` + volume `postgres_data`
+- [x] Healthcheck endpoint `/api/health` — `prisma.$queryRaw SELECT 1` + timeout 5s, DB ล่ม → **503**, ผูกเข้า `healthcheck:` ของ service `app` แล้ว
 - [ ] CI ด้วย GitHub Actions: build + push image ไป `ghcr.io`
+
+**Gotchas ที่เจอจริงตอนทำ Phase 4** (เก็บไว้กันทีมเสียเวลาซ้ำ)
+
+1. **build-time `DATABASE_URL`** — `lib/prisma.ts` `throw` ตั้งแต่ตอน import ถ้าไม่มีค่า และ `next build`
+   ต้อง import ทุก route ในขั้น "Collecting page data" (`force-dynamic` กันแค่การ *render* ไม่ได้กันการ *import*)
+   → stage `builder` ใส่ค่าหลอกไว้ ค่าจริงส่งตอน runtime
+   *ทางเลือกที่สะอาดกว่า:* ทำ `lib/prisma.ts` ให้ lazy แล้วถอดค่าหลอกออก
+2. **`NEXT_PUBLIC_*` ต้องเป็น build arg** — `lib/auth-client.ts` เป็น client code ค่าถูก inline ตอน build
+   ใส่ใน `environment:` ของ compose ไม่มีผล ต้องส่งผ่าน `build.args` และ build ใหม่เมื่อเปลี่ยนค่า
+3. **compose ไม่อ่าน `DATABASE_URL` จาก `.env`** — ประกอบเองจาก `POSTGRES_*` โดยบังคับ host = `db`
+   เพราะค่าใน `.env` เป็น `localhost` ไว้ให้ `pnpm dev` (ไฟล์เดียวใช้ได้ทั้งสองโหมด)
+4. **healthcheck ต้องใช้ `127.0.0.1` ไม่ใช่ `localhost`** — ใน container `/etc/hosts` ผูก `localhost`
+   กับ `::1` ด้วย busybox wget เลยลอง IPv6 ก่อนแล้วโดน connection refused (Next bind `0.0.0.0` = IPv4)
+   และ image `node:22-alpine` มี `wget` แต่**ไม่มี `curl`**
+5. **`prisma db seed` ใช้ไม่ได้** — Prisma 7 ต้องประกาศ `migrations.seed` ใน `prisma.config.ts` ซึ่งยังไม่มี
+   → migrate service เรียก `pnpm db:seed` (`tsx prisma/seed.ts`) ตรง ๆ แทน
+6. **`prisma/seed.ts` เรียก `deleteMany()` ก่อน insert** — ลบข้อมูลทั้งหมด ถ้า seed ทุกครั้งที่ `up`
+   ข้อมูลจะหายทุก restart → กั้นด้วย `RUN_SEED` (default `false`) ต้องสั่งชัดเจนถึงจะ seed
+7. **ห้ามใส่ `container_name:`** — ชนกับ dev container `stockapp-db` ที่รันอยู่แล้ว
+   ปล่อยให้ compose ตั้งชื่อ prefix ตาม project เพื่อรันหลาย stack พร้อมกันได้
 
 ### Phase 5 — Production (วันที่ 5)
 นำขึ้น production จริงพร้อมความปลอดภัยและ monitoring
